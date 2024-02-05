@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="/images/icons8-hacker-60.png">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>contact</title>
+
+    <!-- font awesome cdn link  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Add this style to your existing styles or in the head of your HTML */
+        #toast {
+            display: none;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    
+
+    <style>
+        /* Add this CSS to style your custom alert */
+        .alert {
+          display: none;
+          padding: 50px; /* Increased padding for a larger alert */
+          background-color: #0d0d0d; /* Red background color */
+          color: white;
+          border-radius: 10px; /* Increased border radius for rounded corners */
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 1;
+          text-align: center; /* Center-align text */
+        }
+        #alertMessage {
+    font-size: 18px; /* Adjust the font size for the text */
+    margin-bottom: 15px; /* Add margin for spacing between text and close button */
+  }
+      
+        .closebtn {
+          color: #1a5c31;
+          font-weight: bold;
+          font-size: 70px;
+          line-height: 70px;
+          cursor: pointer;
+        }
+      
+        .closebtn:hover {
+          color: black;
+        }
+      </style>
+
+</head>
+<body>
+    
+<!-- navbar section starts  -->
+
+<nav class="navbar">
+    <a href="index.html"> <i class="fas fa-home"></i> <span>home</span> </a>
+    <a href="about.html"> <i class="fas fa-user"></i> <span>about</span> </a>
+    <a href="portfolio.html"> <i class="fas fa-briefcase"></i> <span>portfolio</span> </a>
+    <a href="certifications.html"> <i class="fas fa-blog"></i> <span>Certifications</span> </a>
+    <a href="contact.html"> <i class="fas fa-address-book"></i> <span>contact</span> </a>
+</nav>
+
+<!-- navbar section ends -->
+
+<!-- contact section starts  -->
+
+<section class="contact">
+
+<h1 class="heading"> contact <span>me</span> </h1>
+
+<div class="row">
+
+    <div class="info-container">
+
+        <h1>get in touch</h1>
+
+        <p>Feel free to pose a question or share something interesting with me :-)</p>
+
+        <div class="box-container">
+
+            <div class="box">
+                <i class="fas fa-map"></i>
+                <div class="info">
+                    <h3>address :</h3>
+                    <p>KPK, PAKISTAN</p>
+                </div>
+            </div>
+
+            <div class="box">
+                <i class="fas fa-envelope"></i>
+                <div class="info">
+                    <h3>email :</h3>
+                    <p style="font-size: 15px; padding-bottom:0px;">
+                        <a href="mailto:mtabarikasif@gmail.com" style="text-transform: lowercase; color:#aaa; font-size: inherit;">mtabarikasif@gmail.com</a>
+                    </p>
+                    
+                </div>
+            </div>
+
+            <div class="box">
+                <i class="fas fa-phone"></i>
+                <div class="info">
+                    <h3>number :</h3>
+                    <p>+92-320-8098749</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="share">
+            <a target="_blank" href="https://www.facebook.com/" class="fab fa-facebook-f"></a>
+            <a target="_blank" href="https://twitter.com/MufasaNotorious" class="fab fa-twitter"></a>
+            <a target="_blank" href="https://www.instagram.com/" class="fab fa-instagram"></a>
+            <a target="_blank" href="https://www.linkedin.com/in/mtabarikasif/" class="fab fa-linkedin"></a>
+        </div>
+
+    </div>
+
+    <form id="contactForm" action="https://formspree.io/f/xbjngyzo" method="POST" ">
+        <div class="inputBox">
+            <input type="text" name="name" placeholder="Your name" required>
+            <input type="number" name="number" placeholder="Your number" required minlength="10" maxlength="15">
+        </div>
+    
+        <div class="inputBox">
+            <input type="email" name="email" id="email" placeholder="Your email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+            <input type="text" name="subject" placeholder="Your subject" required>
+        </div>
+    
+        <textarea name="message" placeholder="Your message" id="message" cols="30" rows="10" required minlength="5" maxlength="320"></textarea>
+    
+        <input type="submit" value="Send Message" class="btn">
+    </form>
+    <div id="customAlert" class="alert">
+        <span class="closebtn" onclick="closeAlert()">&times;</span>
+        <p id="alertMessage"></p>
+      </div>
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+    
+            // Collect form data
+            const formData = new FormData(document.getElementById("contactForm"));
+    
+            // Your form submission logic here using fetch or AJAX
+            fetch("https://formspree.io/f/xbjngyzo", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                    // Add any other headers if needed
+                }
+            })
+            .then(response => response.json()) // Assuming Formspree responds with JSON
+            .then(data => {
+                // You can customize this part to handle the success response
+                if (data.ok) {
+                    showAlert("Message sent successfully!");
+                } else {
+                    alert("Failed to send message. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("An error occurred. Please try again.");
+            })
+            .finally(() => {
+                // Reset the form after submission, whether it was successful or not
+                document.getElementById("contactForm").reset();
+            });
+        });
+    </script>
+    
+<script>
+    // Function to display the custom alert
+    function showAlert(message) {
+      var alertDiv = document.getElementById("customAlert");
+      var alertMessage = document.getElementById("alertMessage");
+  
+      // Set the alert message
+      alertMessage.innerHTML = message;
+  
+      // Display the alert
+      alertDiv.style.display = "block";
+  
+      // Automatically close the alert after 3000 milliseconds (3 seconds)
+      setTimeout(function () {
+        closeAlert();
+      }, 5000);
+    }
+  
+    // Function to close the custom alert
+    function closeAlert() {
+      var alertDiv = document.getElementById("customAlert");
+      alertDiv.style.display = "none";
+    }
+  </script>
+    
+    
+
+
+
+    <div style="display: none">Powered by Verifalia <a href="https://verifalia.com/">email verifier</a></div>
+<script defer
+  src="https://unpkg.com/verifalia-widget@1.10.0/dist/verifalia-widget.js"
+  data-verifalia-appkey="a364d37b9dfb4e7197318dac3497d066"
+  integrity="sha512-Byn2sawjqjYOq9vwcSZdb8ncm3h3B4EmeyQ5hM035sShmwzv58/LdwACNmzJnkmILKvEvavSvdI6HaHy8FJWvg=="
+  crossorigin="anonymous"></script>
+  
+    
+    
+    
+    
+
+</div>
+
+</section>
+
+<!-- contact section ends -->
+
+</body>
+</html>
